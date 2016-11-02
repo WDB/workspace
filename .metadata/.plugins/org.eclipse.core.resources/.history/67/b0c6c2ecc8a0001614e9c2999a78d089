@@ -1,0 +1,27 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+class myframe extends JFrame{
+	JPanel p1,p2;
+	JLabel lstart;
+	JButton bstart;
+	public myframe(){
+		setTitle("시작 화면");
+		setSize(300,200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		lstart = new JLabel(BorderLayout.CENTER);
+		lstart.setText("이름 적고 시작하세요");
+		bstart = new JButton(BorderLayout.NORTH);
+		bstart.setText("게임 시작");
+		add(lstart);
+		add(bstart);
+		setVisible(true);
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		new myframe();
+	}
+}

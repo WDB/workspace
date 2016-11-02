@@ -1,0 +1,17 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class myframe extends JFrame{
+	public myframe(){
+		setTitle("시작페이지");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300,200);
+		setVisible(true);
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		new myframe();
+	}
+}
