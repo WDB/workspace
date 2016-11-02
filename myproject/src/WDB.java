@@ -33,9 +33,18 @@ class myframe extends JFrame implements ActionListener{
 		yourframe.setSize(1000, 500);
 		yourframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		yourframe.setLayout(new GridLayout(0,3));
+		Object[] array = new Object[15];
 		for(int i = 0;i<15;i++){
-			yourframe.add(new JButton("a"));
-		}		
+			array[i] = yourframe.add(new JButton("a"+i));
+		}
+		ImageIcon[] nope1 = new ImageIcon[7];
+		for(int i = 0;i<nope1.length;i++){
+			nope1[i] = new ImageIcon((i+1)+".jpg");
+		}
+		Object[] array1 = new Object[nope1.length];
+		for(int i = 0;i<array1.length;i++){
+			array1[i] = nope1[(int) (Math.random()*array1.length)];
+		}
 		yourframe.setVisible(true);
 		this.setVisible(false);
 	}
