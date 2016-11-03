@@ -39,19 +39,6 @@ class myframe extends JFrame implements ActionListener{
 		setResizable(false);
 		setVisible(true);
 	}
-	private class mylistener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			if(arg0.getActionCommand().equals("버튼1")){
-				v1 = new JButton(new ImageIcon("1.jpg"));
-				p2.add(v1);
-				System.out.println("wef");
-			}
-		}
-		
-	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -65,14 +52,21 @@ class myframe extends JFrame implements ActionListener{
 		
 		v1 = new JButton("버튼1");
 		v1.addActionListener(new mylistener());
-		
 		p2.add(v1);
 		p2.setVisible(true);
 		setResizable(true);
 		add(p2);
 	}
 }
+class mylistener implements ActionListener extends myframe{
 
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		v1 = new JButton(new ImageIcon("1.jpg"));
+	}
+	
+}
 public class WDB{
 	public static void main(String args[]){
 		new myframe();

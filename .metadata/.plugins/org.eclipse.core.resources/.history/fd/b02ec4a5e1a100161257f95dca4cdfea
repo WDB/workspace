@@ -45,9 +45,8 @@ class myframe extends JFrame implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			if(arg0.getActionCommand().equals("¹öÆ°1")){
-				v1 = new JButton(new ImageIcon("1.jpg"));
-				p2.add(v1);
-				System.out.println("wef");
+				v1 = new JButton(new ImageIcon("../1.jpg"));
+				System.out.println("½´¹ß");
 			}
 		}
 		
