@@ -1,0 +1,51 @@
+import java.awt.*;
+import javax.swing.*;
+import java.sql.*;
+import java.awt.event.*;
+import java.util.*;
+import java.util.Timer;
+public class WDB extends JFrame{
+	String userid;//유저 아이디 
+	int cards[] = new int[20];//카드 셔플
+	
+	
+	//게임 구현 부분
+	JPanel p1;
+	ImageIcon ic1; // 뒷면 이미지 저장할 아이콘
+	ImageIcon[] ics = new ImageIcon[20]; // 앞면 이미지들
+	JLabel labelimage[] = new JLabel[20]; // 이미지들을 올릴 라벨들
+	Timer maxtime = new Timer(); //패를 섞을 때 타이머 초기화
+	Timer hidetime = new Timer(); // 패를 뒤집기 전에 패를 몇초간 보여줄지 타이머
+	Timer timerCardCheck = new Timer();		// 패 2개를 뒤집고나서 틀렸을 경우 몇초간 보여줄지 타이머
+	JLabel check; //2개 패 찾기를 성공한 것을 누른건지 확인하기 위한 버튼
+	JLabel first; //처음 선택된 버튼
+	JLabel second; //두번째 선택된 버튼
+	
+	int twocheck; //버튼이 몇번 눌렸는지 체크하기
+	int firstnumber; //첫번째 눌린 버튼에서 배열의 카드번호 저장하기 위해 
+	int secondnumber; //두번째 눌린 버튼에서 배열의 카드번호 저장하기 위해
+	int nopenumber;//몇번째 버튼인지 확인하기 위한 눌려진 버튼의 번호 저장
+	ImageIcon selector;//눌려진 이미지 보여주기 위해
+	
+	//결과 팝업창
+	JDialog result;
+	JLabel text;
+	JLabel score;
+	JButton resultok;
+	int cardscore = 0;
+	
+	public WDB(){
+		//초기 생성자
+		super("그림 맞추기");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		p1 = new JPanel();
+		setBackground(Color.YELLOW);
+		setLayout(new BorderLayout());
+		
+		resultok = new JButton("확인");
+		setVisible(true);
+	}
+	public static void main(String args[]){
+		new WDB();
+	}
+}
