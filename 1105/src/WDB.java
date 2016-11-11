@@ -23,7 +23,7 @@ public class WDB extends JFrame{
 	JLabel labelimage[] = new JLabel[20]; // 이미지들을 올릴 라벨들
 	Timer maxtime = new Timer(); //패를 섞을 때 타이머 초기화
 	Timer hidetime = new Timer(); // 패를 뒤집기 전에 패를 몇초간 보여줄지 타이머
-	Timer timerCardCheck = new Timer();		// 패 2개를 뒤집고나서 틀렸을 경우 몇초간 보여줄지 타이머
+	Timer timecheck = new Timer();		// 패 2개를 뒤집고나서 틀렸을 경우 몇초간 보여줄지 타이머
 	JLabel check; //2개 패 찾기를 성공한 것을 누른건지 확인하기 위한 버튼
 	JLabel first; //처음 선택된 버튼
 	JLabel second; //두번째 선택된 버튼
@@ -80,10 +80,114 @@ public class WDB extends JFrame{
 				hidebuttonimage();
 				
 				for(int i = 0;i<20;i++){
+					labelimage[i].addMouseListener(new mouseclicker());
+				}
+				for(int i = 0;i<20;i++){
 					add(labelimage[i]);
 				}
 		}
 	}
+	private class mouseclicker implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			check = (JLabel) e.getSource();
+			if(check.getName() == "checked"){ //눌린 버튼이 check이면 성공한 버튼 눌린거면 실행 안하기
+				twocheck = 0;
+			}
+			else if(twocheck == 0 || twocheck == 1){//카드가 뒤집어졌을 때 실행
+				twocheck += 1; //카드 선택될 때마다 1카운트
+				//첫번째 눌린 카드의 번호
+				if(twocheck == 1){
+					first = (JLabel) e.getSource();
+					nopenumber = Integer.parseInt(first.getName()) - 1;
+					selector = new ImageIcon(cards[nopenumber]+".jpg");
+					first.setIcon(selector); //버튼 눌러진 이미지 저장하기
+					
+					firstnumber = cards[nopenumber]; //카드번호가 10이하면 그냥 저장
+					if(cards[nopenumber] > 10){//카드번호가 10보다 크면 -10
+						firstnumber = cards[nopenumber] - 10;
+					}
+				}
+				//두번째 눌린 카드의 번호
+				if(check.getName() == first.getName()){// 두번째 클릭이 처음클릭한 카드를 또 선택했으면 카운트0
+					twocheck = 1;
+				}
+				else if(twocheck == 2){
+					second = (JLabel) e.getSource(); //첫번째 눌린 버튼 객체 가져오기
+					nopenumber = Integer.parseInt(second.getName()) - 1;
+					selector = new ImageIcon(cards[nopenumber]+".jpg");
+					second.setIcon(selector);
+					
+					secondnumber = cards[nopenumber];//카드번호가 10이하면 그냥 저장
+					if(cards[nopenumber] > 10){ //카드번호가 10보다 크면 -10
+						secondnumber = cards[nopenumber] - 10;
+					}
+					if(firstnumber == secondnumber){ //첫번째 두번째 선택된 카드를 비교하자.
+						twocheck = 0; //2장 선택 시 다시 초기화
+						first.setName("checked"); //성공이므로  선택 못하게 하기
+						second.setName("checked"); //성공이므로  선택 못하게 하기
+						
+						int end = 0;//패 몇 개 맞췄는지 확인하기
+						for(int i = 0;i<20;i++){
+							if((labelimage[i].getName()).equals("checked")){
+								end = end + 1;
+								if(end == 20){ //20개 전부 맞춘다면
+									abc.cancel(); //타이머 정지
+									timers.setText(" " +sec+"초");
+									sco = 0;
+									scores.setText(" "+sco+"점");
+									break;
+								}
+							}
+						}
+					}
+					else{
+						timecheck = new Timer();
+						timecheck.scheduleAtFixedRate(new TimerTask(){//첫번째 두번째 카드 비교 후 틀리면 몇초간 보여주기
+
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								twocheck = 0; //카드 2선택되면 다시 초기화, 카드가 뒷면 보일 때까지 다른 거 못 건드림
+								first.setIcon(ic1); //틀렸으므로 복구
+								second.setIcon(ic1); // 틀렸으므로 복구
+								timecheck.cancel(); //타이머 종료
+							}
+							
+						}, 200,1); //시간이 지나면 카드 뒷면 보이기
+					}
+				}//두번째 눌린 카드 번호
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	public void hidebuttonimage() {
 		// TODO Auto-generated method stub
 		for ( int i = 0; i<20; i++){
@@ -117,9 +221,9 @@ public class WDB extends JFrame{
 		while(true){
 			randum = (int)(Math.random()*20+1);
 			cards[i] = randum;
-			for(int j = 0;j<cards.length;j++){
+		aa:for(int j = 0;j<20;j++){
 				if(j == i){
-					break;
+					break aa;
 				}
 				if(cards[j] == randum){
 					i = i - 1;
