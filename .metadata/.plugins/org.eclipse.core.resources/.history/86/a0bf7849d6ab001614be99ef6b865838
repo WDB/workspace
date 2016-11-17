@@ -1,0 +1,36 @@
+import java.util.Timer;
+import java.util.TimerTask;
+
+class caterpillar{
+	private int mcount;
+	private MyPlayGround myplayground;
+	
+	public caterpillar(){
+		Timer timer = new Timer();
+		mytimeevent mytimeevent = new mytimeevent(this);
+		timer.schedule(mytimeevent, 1000,1000);
+		myplayground = new MyPlayGround();
+	}
+	public void everytimecheck(){
+		System.out.println(mcount++);
+		myplayground.repaint();
+	}
+}
+class mytimeevent extends TimerTask{
+	caterpillar mcanvastest1;
+	
+	public mytimeevent(caterpillar canvastest1){
+		mcanvastest1 = canvastest1;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		mcanvastest1.everytimecheck();
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		new caterpillar();
+	}
+}

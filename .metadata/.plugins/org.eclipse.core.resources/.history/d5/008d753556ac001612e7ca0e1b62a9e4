@@ -1,0 +1,49 @@
+import java.sql.*;
+import javax.swing.*;
+import java.sql.*;
+import javax.swing.table.AbstractTableModel;
+
+class myframe extends JFrame{
+	JTextField t1title;
+	JTextField t2pub;
+	JTextField t3year;
+	JTextField t4price;
+	
+	public myframe(){
+		setSize(190,250);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("텍스트");
+		
+		JPanel panel = new JPanel();
+		t1title = new JTextField(10);
+		t1title.setText("객체지향");
+		t2pub = new JTextField(10);
+		t2pub.setText("영진출판사");
+		t3year = new JTextField(10);
+		t3year.setText("2016");
+		t4price = new JTextField(10);
+		t4price.setText("20000");
+		panel.add(new JLabel("제목"));
+		panel.add(t1title);
+		panel.add(new JLabel("출판사"));
+		panel.add(t2pub);
+		panel.add(new JLabel("연도"));
+		panel.add(t3year);
+		panel.add(new JLabel("가격"));
+		panel.add(t4price);
+		
+		JButton button = new JButton("등록");
+		panel.add(button);
+		
+		JButton button1 = new JButton("결과보기");
+		panel.add(button1);
+		
+		add(panel);
+		setVisible(true);
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		new myframe();
+	}
+}

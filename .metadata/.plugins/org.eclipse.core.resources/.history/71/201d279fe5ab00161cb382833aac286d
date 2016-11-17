@@ -1,0 +1,37 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class WDB {
+	public static void main(String args[]){
+		//파일을 열어서 데이터를 읽어와서 퐈면에 출력하자.
+		FileInputStream in;
+		FileOutputStream out;
+		int data = 0;
+		//파일을 생성
+		try {
+			in = new FileInputStream("source.txt");
+			out = new FileOutputStream("new.txt");
+			
+			while((data = in.read()) != 1){
+				//먼저 1바이트를 읽어온다.
+				
+				//읽어온 데이터를 새파일에 적는다.
+				out.write(data);
+			}			
+			
+//			System.out.println(data);
+//			data = in.read();
+			
+			in.close();
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

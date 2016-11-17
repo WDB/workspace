@@ -1,0 +1,139 @@
+interface queue{
+	boolean isempty();
+	void enqueue(char item);
+	char dequeue();
+	void delete();
+	char peek();
+}
+class qnode{
+	char data;
+	qnode link;
+}
+class linkedqueue implements queue{
+	qnode front;
+	qnode rear;
+	
+	public linkedqueue(){
+		front = null;
+		rear = null;
+	}
+	@Override
+	public boolean isempty() {
+		// TODO Auto-generated method stub
+		return (front == null);
+	}
+
+	@Override
+	public void enqueue(char item) {
+		// TODO Auto-generated method stub
+		qnode newnode = new qnode();
+		newnode.data = item;
+		newnode.link = null;
+		if(isempty()){
+			front = newnode;
+			rear = newnode;
+		}
+		else{
+			rear.link = newnode;
+			rear = newnode;
+		}
+		System.out.println("inserted item : "+item);
+	}
+
+	@Override
+	public char dequeue() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("deleting fail!");
+			return 0;
+		}
+		else{
+			char item = front.data;
+			front = front.link;
+			if(front == null){
+				rear = null;
+			}
+			return item;
+		}
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("deleting fail!");
+		}
+		else{
+			front = front.link;
+			if(front == null){
+				rear = null;
+			}
+		}
+	}
+
+	@Override
+	public char peek() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("peeking fail!");
+			return 0;
+		}
+		else{
+			return front.data;
+		}
+	}
+	public void printqueue(){
+		if(isempty()){
+			System.out.printf("linked queue is empty!");
+		}
+		else{
+			qnode temp = front;
+			System.out.printf("linked queue>>");
+			while(temp!=null){
+				System.out.printf("%c ",temp.data);
+				temp = temp.link;
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		char deleteditem;
+		linkedqueue lq = new linkedqueue();
+		
+		lq.enqueue('a');
+		lq.printqueue();
+		
+		lq.enqueue('b');
+		lq.printqueue();
+		
+		deleteditem = lq.dequeue();
+		if(deleteditem != 0){
+			System.out.println("deleted item : "+deleteditem);
+		}
+		lq.printqueue();
+		
+		lq.enqueue('c');
+		lq.printqueue();
+		
+		deleteditem = lq.dequeue();
+		if(deleteditem != 0){
+			System.out.println("deleteditem : "+deleteditem);
+		}
+		lq.printqueue();
+		
+		deleteditem = lq.dequeue();
+		if(deleteditem != 0){
+			System.out.println("deleteditem : "+deleteditem);
+		}
+		lq.printqueue();
+		
+		deleteditem = lq.dequeue();
+		if(deleteditem != 0){
+			System.out.println("deleted item : "+deleteditem);
+		}
+		lq.printqueue();
+	}
+}

@@ -1,0 +1,38 @@
+import java.io.*;
+
+public class WDB{
+	public static void main(String args[]){
+		FileInputStream in;
+		FileOutputStream out;
+		int data = 0;
+		try {
+			in = new FileInputStream("CPM.txt");
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+			data = in.read();
+			System.out.println(data);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}

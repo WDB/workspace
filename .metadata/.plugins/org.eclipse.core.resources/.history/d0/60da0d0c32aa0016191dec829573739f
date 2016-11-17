@@ -1,0 +1,119 @@
+interface queue{
+	boolean isempty();
+	void enqueue(char item);
+	char dequeue();
+	void delete();
+	char peek();
+}
+
+class arrayqueue implements queue{
+	private int front;
+	private int rear;
+	private int queuesize;
+	private char itemarray[];
+	
+	public arrayqueue(int queuesize){
+		front = 0;
+		rear = 0;
+		this.queuesize = queuesize;
+		itemarray = new char[this.queuesize];
+	}
+	@Override
+	public boolean isempty() {
+		// TODO Auto-generated method stub
+		return (front==rear);
+	}
+	public boolean isfull(){
+		return (((rear+1)%this.queuesize)==front);
+	}
+	@Override
+	public void enqueue(char item) {
+		// TODO Auto-generated method stub
+		if(isfull()){
+			System.out.println("inserting fail");
+		}
+		else{
+			rear = (rear+1)%this.queuesize;
+			itemarray[rear] = item;
+			System.out.println("inserting item : "+item);
+		}
+	}
+
+	@Override
+	public char dequeue() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("deleting fail!");
+			return 0;
+		}
+		else{
+			front = (front+1)%this.queuesize;
+			return itemarray[front];
+		}
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("deleting fail!");
+		}
+		else{
+			front = (front+1)%this.queuesize;
+		}
+	}
+
+	@Override
+	public char peek() {
+		// TODO Auto-generated method stub
+		if(isempty()){
+			System.out.println("peeking fail!");
+			return 0;
+		}
+		else{
+			return itemarray[(front+1)%this.queuesize];
+		}
+	}
+	public void printqueue(){
+		if(isempty()){
+			System.out.println("empty empty");
+		}
+		else{
+			System.out.printf("array circular queue>>");
+			for(int i = (front+1)%this.queuesize;i!=(rear+1)%this.queuesize;
+					i=++i%this.queuesize){
+				System.out.printf("%c ",itemarray[i]);
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		int queuesize = 4;
+		char deleteditem;
+		arrayqueue cq = new arrayqueue(queuesize);
+		
+		cq.enqueue('a');
+		cq.printqueue();
+		
+		cq.enqueue('b');
+		cq.printqueue();
+		
+		deleteditem = cq.dequeue();
+		if(deleteditem!=0){
+			System.out.println("deleteditem : "+deleteditem);
+		}
+		cq.printqueue();
+		
+		cq.enqueue('c');
+		cq.printqueue();
+		
+		cq.enqueue('d');
+		cq.printqueue();
+		
+		cq.enqueue('e');
+		cq.printqueue();
+	}
+}

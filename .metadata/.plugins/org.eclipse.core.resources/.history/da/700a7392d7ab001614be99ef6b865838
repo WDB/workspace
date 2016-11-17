@@ -1,0 +1,23 @@
+import java.io.*;
+
+public class WDB{
+	public static void main(String args[]){
+		// 파일을 생성해서 데이터를 읽는다.
+		FileOutputStream out;
+		
+		//파일을 생성
+		try {
+			out = new FileOutputStream("C:\\DB.txt");
+			out.write(1);
+			out.write(2);
+			out.write(3);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

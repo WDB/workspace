@@ -1,0 +1,118 @@
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Vector;
+class book{
+//	 BOOK_ID                                   NOT NULL NUMBER
+//	 TITLE                                              VARCHAR2(50)
+//	 PUBLISHER                                          VARCHAR2(30)
+//	 YEAR                                               VARCHAR2(10)
+//	 PRICE                                              NUMBER
+	int book_id;
+	String title;
+	String publisher;
+	String year;
+	int price;
+	
+	public int getBook_id() {
+		return book_id;
+	}
+	public void setBook_id(int book_id) {
+		this.book_id = book_id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+}
+public class WDB{
+	public static void main(String args[]){
+		ArrayList<book> vector = new ArrayList<book>();
+		Connection conn = makeconnection();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from books order by book_id";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+//				System.out.print(rs.getInt("book_id"));
+//				System.out.print(rs.getString("title"));
+//				System.out.print(rs.getString("publisher"));
+//				System.out.print(rs.getString("year"));
+//				System.out.print(rs.getInt("price")+"\n");
+				
+				book book = new book();
+				book.setBook_id(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setYear(rs.getString("year"));
+				book.setPrice(rs.getInt("price"));
+				
+				vector.add(book);
+				
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		book b;
+		System.out.println("vector의 원소수 : "+vector.size());
+		for(int i = 0;i<vector.size();i++){
+			b = vector.get(i);
+			System.out.print(b.getBook_id()+" ");
+			System.out.print(b.getTitle()+" ");
+			System.out.print(b.getPublisher()+" ");
+			System.out.print(b.getYear()+" ");
+			System.out.print(b.getPrice()+"\n");
+		}
+	}
+
+	private static Connection makeconnection() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		  // 드라이버 로딩
+		  try {
+		   Class.forName("oracle.jdbc.driver.OracleDriver");
+		  } catch (ClassNotFoundException e) {
+		   System.out.println("예외발생: 클래스를 발견할 수 없네요");
+		   return null;
+		   //e.printStackTrace();
+		  }
+		  System.out.println("클래스 로딩 성공");
+		  // 데이터베이스 연결
+		  String url = "jdbc:oracle:thin:@192.168.25.2:1521:orcl";
+		  String id = "hrm";
+		  String pw = "hrm";
+		  try {
+		   conn = DriverManager.getConnection(url, id, pw);
+		  } catch (SQLException e) {
+		   System.out.println("예외발생: getConnection 에러");
+		   e.printStackTrace();
+		   return null;
+		  }
+		  System.out.println("데이터베이스 연결 성공");
+		  return conn;
+	}
+}

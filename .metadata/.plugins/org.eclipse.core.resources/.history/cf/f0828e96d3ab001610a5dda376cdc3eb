@@ -1,0 +1,187 @@
+//이중 연결 리스트로 덱을 구현해 보자.
+class dqnode{
+	char data;
+	dqnode rlink;
+	dqnode llink;
+}
+class dqueue{
+	dqnode front;
+	dqnode rear;
+	
+	public dqueue(){
+		front = null;
+		rear = null;
+	}
+	public boolean isempty(){
+		return (front == null);
+	}
+	public void insertfront(char item){
+		dqnode newnode = new dqnode();
+		newnode.data = item;
+		if(isempty()){
+			front = newnode;
+			rear = newnode;
+			newnode.rlink = null;
+			newnode.llink = null;
+		}
+		else{
+			front.llink = newnode;
+			newnode.rlink = front;
+			newnode.llink = null;
+			front = newnode;
+		}
+		System.out.println("front inserted item : "+item);
+	}
+	public void insertrear(char item){
+		dqnode newnode = new dqnode();
+		newnode.data = item;
+		if(isempty()){
+			front = newnode;
+			rear = newnode;
+			newnode.rlink = null;
+			newnode.llink = null;
+		}
+		else{
+			rear.rlink = newnode;
+			newnode.rlink = null;
+			newnode.llink = rear;
+			rear = newnode;
+		}
+		System.out.println("rear inserted item : "+item);
+	}
+	public char deletefront(){
+		if(isempty()){
+			System.out.println("front deleting fail!");
+			return 0;
+		}
+		else{
+			char item = front.data;
+			if(front.rlink == null){
+				front = null;
+				rear = null;
+			}
+			else{
+				front = front.rlink;
+				front.llink = null;
+			}
+			return item;
+		}
+	}
+	public char deleterear(){
+		if(isempty()){
+			System.out.println("Rear deleting fail");
+			return 0;
+		}
+		else{
+			char item = rear.data;
+			if(rear.llink == null){
+				rear = null;
+				front = null;
+			}
+			else{
+				rear = rear.llink;
+				rear.rlink = null;
+			}
+			return item;
+		}
+	}
+	public void removefront(){
+		if(isempty()){
+			System.out.println("front removing fail!");
+		}
+		else{
+			if(front.rlink == null){
+				front = null;
+				rear = null;
+			}
+			else{
+				front = front.rlink;
+				front.llink = null;
+			}
+		}
+	}
+	public void removerear(){
+		if(isempty()){
+			System.out.println("rear removing fail!");
+		}
+		else{
+			if(rear.llink == null){
+				rear = null;
+				front = null;
+			}
+			else{
+				rear = rear.llink;
+				rear.rlink = null;
+			}
+		}
+	}
+	public char peekfront(){
+		if(isempty()){
+			System.out.println("front peeking fail");
+			return 0;
+		}
+		else{
+			return front.data;
+		}
+	}
+	public char peekrear(){
+		if(isempty()){
+			System.out.println("rear peeking fail");
+			return 0;
+		}
+		else{
+			return rear.data;
+		}
+	}
+	public void printdqueue(){
+		if(isempty()){
+			System.out.printf("dqueue is empty %n %n");
+		}
+		else{
+			dqnode temp = front;
+			System.out.printf("dqueue>>");
+			while(temp != null){
+				System.out.printf("%c ",temp.data);
+				temp = temp.rlink;
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
+}
+public class WDB{
+	public static void main(String args[]){
+		char deleteditem;
+		dqueue dq = new dqueue();
+		
+		dq.insertfront('a');
+		dq.printdqueue();
+		
+		dq.insertfront('b');
+		dq.printdqueue();
+		
+		dq.insertrear('c');
+		dq.printdqueue();
+		
+		deleteditem = dq.deletefront();
+		if(deleteditem != 0){
+			System.out.println("front deleted item:"+deleteditem);
+		}
+		dq.printdqueue();
+		
+		deleteditem = dq.deleterear();
+		if(deleteditem!=0){
+			System.out.println("rear deleted item:"+deleteditem);
+		}
+		dq.printdqueue();
+		
+		dq.insertrear('d');
+		dq.printdqueue();
+		
+		dq.insertfront('e');
+		dq.printdqueue();
+		
+		dq.insertfront('f');
+		dq.printdqueue();
+	}
+}
